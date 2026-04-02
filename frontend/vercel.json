@@ -1,0 +1,5 @@
+{
+  "buildCommand": "echo 'Using static HTML'",
+  "outputDirectory": "public",
+  "framework": null
+}

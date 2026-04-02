@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalPulse - Competitive Intelligence Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+        }
+        
+        .section h2 {
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .card h3 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .card p {
+            color: #64748b;
+            margin-bottom: 0.8rem;
+        }
+        
+        .metric {
+            background: #f1f5f9;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            font-weight: 600;
+        }
+        
+        .impact {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+        
+        .impact-high { background: #fef2f2; color: #dc2626; }
+        .impact-medium { background: #fffbeb; color: #d97706; }
+        .impact-low { background: #f0fdf4; color: #16a34a; }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2563eb;
+        }
+        
+        .stat-label {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+            background: white;
+            margin-top: 3rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .container { padding: 1rem; }
+            .cards { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔍 LocalPulse</h1>
+        <p>Competitive Intelligence Dashboard</p>
+    </div>
+    
+    <div class="container">
+        <!-- Dashboard Stats -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">24</div>
+                <div class="stat-label">Companies Tracked</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">87</div>
+                <div class="stat-label">Analysis Reports</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15</div>
+                <div class="stat-label">Market Trends</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">8.3</div>
+                <div class="stat-label">Avg Competitive Score</div>
+            </div>
+        </div>
+        
+        <!-- Companies Section -->
+        <div class="section">
+            <h2>Companies (3)</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>TechFlow Solutions</h3>
+                    <p><strong>Industry:</strong> Software Development</p>
+                    <p><strong>Location:</strong> San Francisco, CA</p>
+                    <p><strong>Employees:</strong> 150</p>
+                    <div class="metric">Revenue: $5.0M</div>
+                    <p><strong>Focus:</strong> AI-powered workflow automation platform</p>
+                </div>
+                <div class="card">
+                    <h3>DataSync Corp</h3>
+                    <p><strong>Industry:</strong> Data Analytics</p>
+                    <p><strong>Location:</strong> Austin, TX</p>
+                    <p><strong>Employees:</strong> 200</p>
+                    <div class="metric">Revenue: $8.0M</div>
+                    <p><strong>Focus:</strong> Real-time data integration and analytics</p>
+                </div>
+                <div class="card">
+                    <h3>CloudVault Inc</h3>
+                    <p><strong>Industry:</strong> Cloud Storage</p>
+                    <p><strong>Location:</strong> Seattle, WA</p>
+                    <p><strong>Employees:</strong> 300</p>
+                    <div class="metric">Revenue: $12.0M</div>
+                    <p><strong>Focus:</strong> Enterprise cloud storage and backup solutions</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Competitive Analysis Section -->
+        <div class="section">
+            <h2>Competitive Analysis (2)</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>TechFlow Solutions</h3>
+                    <div class="metric">Market Share: 15.5%</div>
+                    <div class="metric">Competitive Score: 7.2/10</div>
+                    <p><strong>💪 Strengths:</strong> Strong AI capabilities, user-friendly interface, rapid product development</p>
+                    <p><strong>⚠️ Weaknesses:</strong> Limited enterprise features, high pricing, small support team</p>
+                    <p><strong>🎯 Opportunities:</strong> Growing automation market, enterprise expansion potential</p>
+                    <p><strong>🚨 Threats:</strong> Major tech companies entering space, regulatory changes</p>
+                </div>
+                <div class="card">
+                    <h3>DataSync Corp</h3>
+                    <div class="metric">Market Share: 22.3%</div>
+                    <div class="metric">Competitive Score: 8.1/10</div>
+                    <p><strong>💪 Strengths:</strong> Real-time processing, robust API, established client base</p>
+                    <p><strong>⚠️ Weaknesses:</strong> Complex setup, steep learning curve, high infrastructure costs</p>
+                    <p><strong>🎯 Opportunities:</strong> IoT data boom, edge computing trend, international expansion</p>
+                    <p><strong>🚨 Threats:</strong> Open source alternatives, data privacy regulations, economic downturn</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Market Trends Section -->
+        <div class="section">
+            <h2>Market Trends (5)</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>📈 AI Automation Growth</h3>
+                    <p>Businesses increasingly adopting AI for process automation, creating new market opportunities.</p>
+                    <div class="impact impact-high">Impact: High</div>
+                </div>
+                <div class="card">
+                    <h3>🔒 Remote Work Data Security</h3>
+                    <p>Rising demand for secure remote work solutions driving investment in security platforms.</p>
+                    <div class="impact impact-high">Impact: High</div>
+                </div>
+                <div class="card">
+                    <h3>⚡ Low-Code Platform Adoption</h3>
+                    <p>Growing preference for low-code development platforms among enterprises.</p>
+                    <div class="impact impact-medium">Impact: Medium</div>
+                </div>
+                <div class="card">
+                    <h3>☁️ Multi-Cloud Strategies</h3>
+                    <p>Organizations adopting multi-cloud approaches for flexibility and risk mitigation.</p>
+                    <div class="impact impact-medium">Impact: Medium</div>
+                </div>
+                <div class="card">
+                    <h3>🌍 Sustainability Focus</h3>
+                    <p>Increased emphasis on sustainable technology solutions and green computing initiatives.</p>
+                    <div class="impact impact-low">Impact: Low</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p><strong>LocalPulse</strong> - Competitive Intelligence Platform</p>
+        <p>Successfully deployed with modern web architecture • <a href="https://github.com/samviras/localpulse" style="color: #2563eb;">View Source Code</a></p>
+    </div>
+</body>
+</html>
