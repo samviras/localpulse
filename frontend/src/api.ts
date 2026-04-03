@@ -11,7 +11,7 @@ export const apiClient = {
   completeOnboarding: (data: any) => api.post('/auth/onboarding', data).then(r => r.data),
   
   // Dashboard
-  getDashboardSummary: () => api.get<DashboardSummary>('/dashboard-summary').then(r => r.data),
+  getDashboardSummary: () => api.get<DashboardSummary>('/dashboard/summary').then(r => r.data),
   
   // Locations
   getLocations: () => api.get<Location[]>('/locations').then(r => r.data),
