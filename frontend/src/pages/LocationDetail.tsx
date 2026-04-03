@@ -17,9 +17,18 @@ export default function LocationDetail() {
 
   useEffect(() => {
     if (!id) return;
-    Promise.all([apiClient.getLocations(), apiClient.getLocationCompetitors(Number(id))])
-      .then(([locs, comps]) => { setLocation(locs.find(l => l.id === Number(id)) || null); setCompetitors(comps); })
-      .catch(console.error).finally(() => setLoading(false));
+    const locationId = Number(id);
+    
+    Promise.all([apiClient.getLocations(), apiClient.getLocationCompetitors(locationId)])
+      .then(([locs, comps]) => { 
+        const found = locs.find(l => l.id === locationId);
+        console.log(`Looking for location ${locationId}, found:`, found);
+        console.log('All locations:', locs);
+        setLocation(found || null); 
+        setCompetitors(comps || []); 
+      })
+      .catch(err => { console.error('Error loading location:', err); })
+      .finally(() => setLoading(false));
   }, [id]);
 
   const handleScan = async () => {
@@ -40,8 +49,8 @@ export default function LocationDetail() {
     else { setSortKey(key); setSortDir('asc'); }
   };
 
-  if (loading) return <div className="flex items-center justify-center h-64"><p className="text-gray-400">Loading...</p></div>;
-  if (!location) return <div className="text-red-400">Location not found</div>;
+  if (loading) return <div className="flex items-center justify-center h-64"><p className="text-gray-400">Loading location {id}...</p></div>;
+  if (!location) return <div className="p-6"><div className="text-red-400">Location {id} not found</div><button onClick={() => window.history.back()} className="mt-4 text-blue-400 hover:underline">← Go back</button></div>;
 
   const velocityData = competitors.filter(c => c.reviews_per_week).sort((a, b) => (b.reviews_per_week || 0) - (a.reviews_per_week || 0)).slice(0, 8)
     .map(c => ({ name: c.name.length > 20 ? c.name.slice(0, 20) + '…' : c.name, velocity: c.reviews_per_week || 0 }));

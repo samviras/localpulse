@@ -103,7 +103,7 @@ async def location_competitors(location_id: int, db: Session = Depends(get_db)):
 
         d = {
             "id": c.id, "location_id": c.location_id, "google_place_id": c.google_place_id,
-            "name": c.name, "address": c.address, "latitude": c.latitude, "longitude": c.longitude,
+            "name": c.name, "address": c.address, "latitude": c.lat, "longitude": c.lng,
             "category": c.category, "phone": c.phone, "website": c.website,
             "distance_km": c.distance_km, "created_at": c.created_at.isoformat(),
             "last_updated": c.last_updated.isoformat(),
@@ -142,7 +142,7 @@ async def get_competitor(competitor_id: int, db: Session = Depends(get_db)):
 
     return {
         "id": c.id, "location_id": c.location_id, "name": c.name, "address": c.address,
-        "latitude": c.latitude, "longitude": c.longitude, "category": c.category,
+        "latitude": c.lat, "longitude": c.lng, "category": c.category,
         "distance_km": c.distance_km, "created_at": c.created_at.isoformat(),
         "location_name": loc.name if loc else None,
         "latest_rating": latest.rating if latest else None,
