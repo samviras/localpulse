@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Scan, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { apiClient } from '../api';
-import CompetitorMap from '../components/CompetitorMap';
 import type { Location, CompetitorWithSnapshot } from '../types';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+
 
 export default function LocationDetail() {
   const { id } = useParams();
@@ -64,8 +63,13 @@ export default function LocationDetail() {
           <Scan className="w-4 h-4" />{scanning ? 'Scanning...' : 'Scan for Competitors'}
         </button>
       </div>
-      <div className="bg-navy-800 rounded-xl p-4 border border-gray-700/30">
-        <CompetitorMap locations={[location]} competitors={competitors} center={[location.latitude, location.longitude]} zoom={14} showRadius radiusCenter={[location.latitude, location.longitude]} height="350px" />
+      <div className="bg-navy-800 rounded-xl p-6 border border-gray-700/30">
+        <h3 className="text-lg font-semibold text-white mb-2">{location.name}</h3>
+        <div className="text-gray-400 text-sm space-y-1">
+          <p><strong>Address:</strong> {location.address}</p>
+          <p><strong>Coordinates:</strong> {location.latitude.toFixed(4)}, {location.longitude.toFixed(4)}</p>
+          <p><strong>Nearby Competitors:</strong> {competitors.length} coffee shops within 500m radius</p>
+        </div>
       </div>
       <div className="bg-navy-800 rounded-xl border border-gray-700/30 overflow-hidden">
         <div className="p-4 border-b border-gray-700/30"><h3 className="text-lg font-semibold text-white">Nearby Competitors ({competitors.length})</h3></div>
@@ -94,17 +98,7 @@ export default function LocationDetail() {
           </table>
         </div>
       </div>
-      {velocityData.length > 0 && (
-        <div className="bg-navy-800 rounded-xl p-6 border border-gray-700/30">
-          <h3 className="text-sm font-semibold text-gray-400 mb-4">Review Velocity Comparison</h3>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={velocityData} layout="vertical"><XAxis type="number" stroke="#6b7280" fontSize={12} /><YAxis type="category" dataKey="name" width={150} stroke="#6b7280" fontSize={11} />
-              <Tooltip contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, color: '#e5e7eb' }} />
-              <Bar dataKey="velocity" radius={[0, 4, 4, 0]}>{velocityData.map((_, i) => <Cell key={i} fill={i === 0 ? '#ef4444' : '#3b82f6'} />)}</Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      )}
+
     </div>
   );
 }
