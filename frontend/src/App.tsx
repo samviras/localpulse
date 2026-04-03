@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
+import Onboarding from './pages/Onboarding';
 import Dashboard from './pages/Dashboard';
 import Locations from './pages/Locations';
 import LocationDetail from './pages/LocationDetail';
@@ -10,14 +11,22 @@ import CompetitorProfile from './pages/CompetitorProfile';
 
 export default function App() {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/locations" element={<Locations />} />
-        <Route path="/alerts" element={<Alerts />} />
-        <Route path="/briefs" element={<Briefs />} />
-      </Routes>
-    </Layout>
+    <Routes>
+      <Route path="/onboarding" element={<Onboarding />} />
+      <Route
+        path="/*"
+        element={
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/locations" element={<Locations />} />
+              <Route path="/alerts" element={<Alerts />} />
+              <Route path="/briefs" element={<Briefs />} />
+            </Routes>
+          </Layout>
+        }
+      />
+    </Routes>
   );
 }
 // Force rebuild Thu Apr  2 22:55:19 PDT 2026

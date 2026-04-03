@@ -197,3 +197,63 @@ if __name__ == "__main__":
         sys.exit(1)
     
     load_real_coffee_shops(api_key=api_key)
+
+
+def refresh_competitor_data(location_id: int, db, api_key: str = None) -> None:
+    """
+    Refresh competitor data for a specific location from Google Places API.
+    Called weekly by cron job.
+    """
+    if not api_key:
+        api_key = os.getenv("GOOGLE_PLACES_API_KEY")
+    if not api_key:
+        print(f"⚠️  No API key for location {location_id}")
+        return
+    
+    try:
+        places_client = PlacesAPIClient(api_key=api_key)
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        return
+    
+    location = db.query(Location).filter(Location.id == location_id).first()
+    if not location:
+        print(f"⚠️  Location {location_id} not found")
+        return
+    
+    print(f"🔄 Refreshing competitors for {location.name}...")
+    
+    try:
+        competitors = db.query(Competitor).filter(
+            Competitor.location_id == location_id
+        ).all()
+        
+        for competitor in competitors:
+            if not competitor.google_place_id:
+                continue
+            
+            try:
+                details = places_client.get_place_details(competitor.google_place_id)
+                if details:
+                    snapshot = CompetitorSnapshot(
+                        competitor_id=competitor.id,
+                        snapshot_date=datetime.utcnow(),
+                        rating=details.get("rating", 4.0),
+                        review_count=details.get("user_ratings_total", 0),
+                        price_level=details.get("price_level", 2),
+                        business_status=details.get("business_status", "OPERATIONAL"),
+                        reviews_per_week=0.5,
+                        rating_change=0
+                    )
+                    
+                    db.add(snapshot)
+                    competitor.last_updated = datetime.utcnow()
+                    print(f"  ✅ Updated {competitor.name}")
+            except Exception as e:
+                print(f"  ⚠️  {competitor.name}: {e}")
+        
+        db.commit()
+        print(f"✅ Completed refresh for {location.name}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        db.rollback()

@@ -5,6 +5,37 @@ from datetime import datetime
 
 Base = declarative_base()
 
+class User(Base):
+    __tablename__ = "users"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True)
+    firebase_uid = Column(String, unique=True, index=True)  # Firebase UID
+    business_name = Column(String)
+    business_type = Column(String)  # coffee_shop, restaurant, etc.
+    business_lat = Column(Float)  # From onboarding
+    business_lng = Column(Float)  # From onboarding
+    business_address = Column(String)
+    timezone = Column(String, default="UTC")
+    onboarding_complete = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relationships
+    locations = relationship("UserLocation", back_populates="user")
+
+class UserLocation(Base):
+    __tablename__ = "user_locations"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    location_id = Column(Integer, ForeignKey("locations.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)
+    
+    # Relationships
+    user = relationship("User", back_populates="locations")
+    location = relationship("Location", back_populates="user_locations")
+
 class Location(Base):
     __tablename__ = "locations"
     
@@ -20,6 +51,7 @@ class Location(Base):
     competitors = relationship("Competitor", back_populates="location")
     alerts = relationship("Alert", back_populates="location")
     weekly_briefs = relationship("WeeklyBrief", back_populates="location")
+    user_locations = relationship("UserLocation", back_populates="location")
 
 class Competitor(Base):
     __tablename__ = "competitors"
@@ -92,3 +124,22 @@ class WeeklyBrief(Base):
     
     # Relationships
     location = relationship("Location", back_populates="weekly_briefs")
+
+class Recommendation(Base):
+    __tablename__ = "recommendations"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    location_id = Column(Integer, ForeignKey("locations.id"))
+    competitor_id = Column(Integer, ForeignKey("competitors.id"), nullable=True)
+    recommendation_type = Column(String)  # price, menu, hours, etc.
+    title = Column(String)  # e.g., "Lower espresso price by $0.50"
+    description = Column(Text)  # Rationale and details
+    rationale = Column(Text)  # Why this recommendation (competitor data, market analysis)
+    priority = Column(String, default="medium")  # low, medium, high
+    status = Column(String, default="pending")  # pending, implemented, dismissed
+    generated_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relationships
+    location = relationship("Location", foreign_keys=[location_id])
+    competitor = relationship("Competitor", foreign_keys=[competitor_id])
