@@ -143,3 +143,37 @@ class Recommendation(Base):
     # Relationships
     location = relationship("Location", foreign_keys=[location_id])
     competitor = relationship("Competitor", foreign_keys=[competitor_id])
+
+class MenuItem(Base):
+    __tablename__ = "menu_items"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    competitor_id = Column(Integer, ForeignKey("competitors.id"))
+    item_name = Column(String, index=True)  # e.g., "Espresso", "Croissant"
+    category = Column(String)  # e.g., "coffee", "pastry", "food", "beverage"
+    description = Column(Text, nullable=True)  # Item description if available
+    price = Column(Float, nullable=True)  # Price if available
+    review_count = Column(Integer, default=0)  # How many reviews mention this item
+    sentiment_score = Column(Float, nullable=True)  # 0-5 scale sentiment from reviews
+    detected_date = Column(DateTime, default=datetime.utcnow)  # When item was first detected
+    last_updated = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)  # Last time item was updated
+    source = Column(String)  # "google_places", "website", "reviews"
+    is_active = Column(Boolean, default=True)  # Is item currently available
+    
+    # Relationships
+    competitor = relationship("Competitor", backref="menu_items")
+    snapshots = relationship("MenuItemSnapshot", back_populates="menu_item")
+
+class MenuItemSnapshot(Base):
+    __tablename__ = "menu_item_snapshots"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    menu_item_id = Column(Integer, ForeignKey("menu_items.id"))
+    snapshot_date = Column(DateTime, default=datetime.utcnow, index=True)  # When this snapshot was taken
+    price = Column(Float, nullable=True)  # Price at this time
+    review_count = Column(Integer)  # Review count at this time
+    status = Column(String)  # "active", "removed", "added"
+    sentiment_score = Column(Float, nullable=True)  # Sentiment at this time
+    
+    # Relationships
+    menu_item = relationship("MenuItem", back_populates="snapshots")

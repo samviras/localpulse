@@ -4,6 +4,7 @@ import Onboarding from './pages/Onboarding';
 import Dashboard from './pages/Dashboard';
 import Locations from './pages/Locations';
 import LocationDetail from './pages/LocationDetail';
+import MenuComparison from './pages/MenuComparison';
 import Alerts from './pages/Alerts';
 import Briefs from './pages/Briefs';
 import BriefDetail from './pages/BriefDetail';
@@ -20,6 +21,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/locations" element={<Locations />} />
+              <Route path="/menu" element={<MenuComparison />} />
               <Route path="/alerts" element={<Alerts />} />
               <Route path="/briefs" element={<Briefs />} />
             </Routes>

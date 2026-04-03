@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, MapPin, AlertTriangle, FileText, Search } from 'lucide-react';
+import { LayoutDashboard, MapPin, AlertTriangle, FileText, Search, UtensilsCrossed } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { apiClient } from '../api';
 
 const navItems = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/locations', icon: MapPin, label: 'My Locations' },
+  { to: '/menu', icon: UtensilsCrossed, label: 'Menu Ideas' },
   { to: '/alerts', icon: AlertTriangle, label: 'Alerts' },
   { to: '/briefs', icon: FileText, label: 'Weekly Briefs' },
 ];

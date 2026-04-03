@@ -14,6 +14,9 @@ from schemas import (
 )
 from demo_data import seed_demo_data
 from real_data import load_real_coffee_shops
+from menu_service import (
+    refresh_competitor_menu, get_top_menu_items, get_competitor_menu, find_menu_gaps
+)
 
 FRONTEND_URL = os.getenv("FRONTEND_URL", "")
 DEMO_MODE = os.getenv("DEMO_MODE", "true").lower() == "true"
@@ -239,6 +242,48 @@ async def generate_brief(location_id: int = Query(...), db: Session = Depends(ge
     )
     db.add(b); db.commit(); db.refresh(b)
     return {"id": b.id, "title": b.title, "message": "Brief generated"}
+
+# --- MENUS (NEW!) ---
+@app.get("/api/locations/{location_id}/menu-comparison")
+async def menu_comparison(location_id: int, db: Session = Depends(get_db)):
+    """Get top menu items across all competitors for a location"""
+    items = get_top_menu_items(location_id, db, limit=15)
+    return {"location_id": location_id, "top_items": items}
+
+@app.get("/api/competitors/{competitor_id}/menu")
+async def competitor_menu(competitor_id: int, db: Session = Depends(get_db)):
+    """Get all menu items for a specific competitor"""
+    competitor = db.query(Competitor).filter(Competitor.id == competitor_id).first()
+    if not competitor:
+        raise HTTPException(404, "Competitor not found")
+    items = get_competitor_menu(competitor_id, db)
+    return {"competitor_id": competitor_id, "competitor_name": competitor.name, "menu_items": items}
+
+@app.post("/api/locations/{location_id}/analyze-menus")
+async def analyze_menus(location_id: int, db: Session = Depends(get_db)):
+    """Trigger menu analysis for all competitors at a location"""
+    location = db.query(Location).filter(Location.id == location_id).first()
+    if not location:
+        raise HTTPException(404, "Location not found")
+    
+    competitors = db.query(Competitor).filter(Competitor.location_id == location_id).all()
+    results = []
+    
+    for comp in competitors:
+        result = refresh_competitor_menu(comp.id, db, GOOGLE_PLACES_API_KEY)
+        results.append(result)
+    
+    return {"location_id": location_id, "competitors_analyzed": len(results), "results": results}
+
+@app.post("/api/locations/{location_id}/menu-gaps")
+async def menu_gaps(location_id: int, your_menu: List[str] = Query([]), db: Session = Depends(get_db)):
+    """Find menu items that competitors have but you don't"""
+    location = db.query(Location).filter(Location.id == location_id).first()
+    if not location:
+        raise HTTPException(404, "Location not found")
+    
+    gaps = find_menu_gaps(location_id, your_menu, db)
+    return {"location_id": location_id, "menu_gaps": gaps, "total_opportunities": len(gaps)}
 
 if __name__ == "__main__":
     import uvicorn

@@ -31,4 +31,9 @@ export const apiClient = {
   getBrief: (id: number) => api.get<WeeklyBrief>(`/briefs/${id}`).then(r => r.data),
   generateBrief: (locationId: number) => api.post(`/locations/${locationId}/generate-brief`).then(r => r.data),
   getRecommendations: (locationId: number) => api.get(`/locations/${locationId}/recommendations`).then(r => r.data),
+  
+  // Menu Comparison
+  getMenuComparison: (locationId: number) => api.get(`/locations/${locationId}/menu-comparison`).then(r => r.data),
+  getCompetitorMenu: (competitorId: number) => api.get(`/competitors/${competitorId}/menu`).then(r => r.data),
+  analyzeMenus: (locationId: number) => api.post(`/locations/${locationId}/analyze-menus`).then(r => r.data),
 };
