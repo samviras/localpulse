@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { Location, CompetitorWithSnapshot, CompetitorSnapshot, Alert, WeeklyBrief, DashboardSummary, CompetitorDetail } from './types';
 
-const API_BASE = import.meta.env.VITE_API_URL || '/api';
+const API_BASE = import.meta.env.VITE_API_URL || 'https://reliable-solace-production-dd7a.up.railway.app/api';
 const api = axios.create({ baseURL: API_BASE });
 
 export const apiClient = {
