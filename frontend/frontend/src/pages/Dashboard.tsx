@@ -50,11 +50,10 @@ export default function Dashboard() {
         <StatCard title="Active Alerts" value={summary?.active_alerts || 0} icon={AlertTriangle} color="red" />
         <StatCard title="Rating Advantage" value={summary?.avg_rating_delta ? `+${summary.avg_rating_delta}` : '0'} icon={TrendingUp} color="amber" delta={`Your avg: ${summary?.my_avg_rating || 0} vs ${summary?.competitor_avg_rating || 0}`} />
       </div>
-      {/* Map disabled due to rendering issues - will re-enable after fixing API integration */}
-      {/* <div className="bg-navy-800 rounded-xl p-4 border border-gray-700/30">
+      <div className="bg-navy-800 rounded-xl p-4 border border-gray-700/30">
         <h3 className="text-lg font-semibold text-white mb-4">Competitive Landscape — Vancouver</h3>
         <CompetitorMap locations={locations} competitors={allCompetitors} height="450px" />
-      </div> */}
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="space-y-3">
           <div className="flex items-center justify-between"><h3 className="text-lg font-semibold text-white">Recent Alerts</h3><Link to="/alerts" className="text-sm text-blue-400 hover:text-blue-300">View all →</Link></div>

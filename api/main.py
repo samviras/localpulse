@@ -13,24 +13,26 @@ from schemas import (
     CompetitorSnapshot as CompetitorSnapshotOut, Alert as AlertOut, WeeklyBrief as WeeklyBriefOut, DashboardSummary
 )
 from demo_data import seed_demo_data
+from real_data import load_real_coffee_shops
 
 FRONTEND_URL = os.getenv("FRONTEND_URL", "")
 DEMO_MODE = os.getenv("DEMO_MODE", "true").lower() == "true"
+GOOGLE_PLACES_API_KEY = os.getenv("GOOGLE_PLACES_API_KEY", "")
 
 app = FastAPI(title="LocalPulse API", version="1.0.0")
 
 allowed_origins = [
     "http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173",
     "https://localpulse.vercel.app",
+    "https://frontend-neon-seven-26.vercel.app",
 ]
 if FRONTEND_URL:
     allowed_origins.append(FRONTEND_URL)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_origin_regex=r"https://localpulse-.*\.vercel\.app",
-    allow_credentials=True,
+    allow_origins=["*"],  # Allow all origins for now (can restrict later)
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -40,6 +42,14 @@ async def startup():
     init_db()
     if DEMO_MODE:
         seed_demo_data()
+    elif GOOGLE_PLACES_API_KEY:
+        # Load real data if API key is available and demo mode is off
+        try:
+            load_real_coffee_shops(api_key=GOOGLE_PLACES_API_KEY)
+        except Exception as e:
+            print(f"⚠️  Could not load real data: {e}")
+            print("Falling back to demo data...")
+            seed_demo_data()
 
 @app.get("/api/health")
 async def health():

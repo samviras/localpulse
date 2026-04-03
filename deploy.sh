@@ -3,7 +3,7 @@ set -e
 
 echo "=== 1. Setting up Backend ==="
 cd ~/localpulse/api
-python3 -m venv venv 2>/dev/null || true
+python3.11 -m venv venv 2>/dev/null || true
 ./venv/bin/pip install -r requirements.txt -q
 DEMO_MODE=true ./venv/bin/python -c "from database import init_db; init_db(); from demo_data import seed_demo_data; seed_demo_data(); print('✅ Backend DB seeded')"
 rm -f localpulse.db

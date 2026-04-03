@@ -12,7 +12,7 @@ from places_api import PlacesAPIClient
 def load_real_coffee_shops(
     api_key: str = None,
     location: tuple = (49.2827, -123.1207),  # Vancouver downtown
-    radius: int = 5000,
+    radius: int = 8000,
     limit: int = 5
 ) -> None:
     """
@@ -48,7 +48,7 @@ def load_real_coffee_shops(
         coffee_shops = places_client.find_coffee_shops(
             location=location,
             radius=radius,
-            query="coffee shop"
+            query="coffee"
         )
         
         if not coffee_shops:
@@ -65,9 +65,7 @@ def load_real_coffee_shops(
                 address=shop["address"],
                 lat=shop["latitude"],
                 lng=shop["longitude"],
-                category="coffee_shop",
-                phone=None,  # Would need details endpoint
-                website=None,  # Would need details endpoint
+                category="coffee_shop"
             )
             db.add(location_obj)
             db.flush()  # Get the ID
@@ -96,9 +94,7 @@ def load_real_coffee_shops(
                     lat=comp_data["latitude"],
                     lng=comp_data["longitude"],
                     category="cafe",
-                    phone=None,
-                    website=None,
-                    distance_km=0.0,  # Would calculate from location
+                    distance_km=0.0  # Would calculate from location
                 )
                 db.add(competitor)
             
@@ -140,7 +136,6 @@ def load_real_coffee_shops(
                 alert = Alert(
                     location_id=loc.id,
                     title=f"New competitor near {loc.name}",
-                    message=f"A new cafe has opened within 500m of {loc.name}",
                     alert_type="competitor_change",
                     severity="medium",
                     is_read=False,

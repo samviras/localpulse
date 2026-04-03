@@ -1,10 +1,8 @@
 import axios from 'axios';
 import type { Location, CompetitorWithSnapshot, CompetitorSnapshot, Alert, WeeklyBrief, DashboardSummary, CompetitorDetail } from './types';
 
-// Use local /api proxy on same origin (Vercel rewrites to Railway backend)
-const API_BASE = import.meta.env.VITE_API_URL || '/api';
+const API_BASE = import.meta.env.VITE_API_URL || 'https://reliable-solace-production-dd7a.up.railway.app/api';
 const api = axios.create({ baseURL: API_BASE });
-console.log('LocalPulse API configured:', API_BASE);
 
 export const apiClient = {
   getDashboardSummary: () => api.get<DashboardSummary>('/dashboard/summary').then(r => r.data),
