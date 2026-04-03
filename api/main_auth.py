@@ -20,10 +20,28 @@ from schemas import (
 )
 from demo_data import seed_demo_data
 from real_data import load_real_coffee_shops, refresh_competitor_data
-from auth import verify_token, get_or_create_user
 from ai_recommendations import generate_recommendations, analyze_weekly_brief
-from cron_jobs import init_scheduler, shutdown_scheduler
 from places_api import PlacesAPIClient
+
+# Optional: auth is disabled in demo mode
+try:
+    from auth import verify_token, get_or_create_user
+except ImportError:
+    print("⚠️  Auth module not available (Firebase dependencies missing)")
+    def verify_token(*args, **kwargs):
+        raise HTTPException(status_code=401, detail="Auth not configured")
+    def get_or_create_user(*args, **kwargs):
+        return None
+
+# Optional: cron jobs
+try:
+    from cron_jobs import init_scheduler, shutdown_scheduler
+except ImportError:
+    print("⚠️  Scheduler not available (APScheduler missing)")
+    def init_scheduler():
+        pass
+    def shutdown_scheduler():
+        pass
 
 FRONTEND_URL = os.getenv("FRONTEND_URL", "")
 DEMO_MODE = os.getenv("DEMO_MODE", "true").lower() == "true"
