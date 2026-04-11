@@ -4,10 +4,57 @@
 
 A full-stack SaaS application that monitors competitor activity across multiple locations, tracks competitive advantages, and provides actionable intelligence for business growth.
 
+---
+
+## 👤 About the Builder
+
+**Hi, I'm Sid 👋**
+*Senior Product Manager | AI Native Builder | Edge Computing*
+
+I'm a product leader with 10+ years of experience across B2B SaaS, AI/ML, IoT, and edge computing. I don't just write PRDs — I build. My side projects are how I stress test the tools, frameworks, and workflows I bring to product strategy every day.
+
+Currently based in Vancouver, BC.
+
+### 🔧 What I'm Building
+- **🔍 LocalPulse**: Competitive intelligence dashboard for SMBs
+  *An MVP built on OpenClaw that automates competitive monitoring and surfaces actionable market signals. Designed to give small businesses the kind of strategic awareness usually reserved for enterprise teams with dedicated analyst headcount.*
+  **Stack**: OpenClaw · Gemma 3 (Ollama) · Mistral · Claude API · MCP Integrations
+
+- **📈 Finance Agent (Elliott Wave Analyzer)**: Agentic AI for technical stock analysis
+  *A purpose-built agent that applies Elliott Wave methodology to equity analysis, focused on the Indian stock market. Combines pattern recognition with sector rotation signals to support informed trading decisions.*
+  **Stack**: LangGraph · Claude API · Python
+
+- **🏠 Vancouver Real Estate Tool**: Local market intelligence, automated
+  *An agentic workflow that aggregates and analyzes Vancouver real estate data, surfacing trends and insights for buyers navigating one of North America's most complex housing markets.*
+  **Stack**: Agentic AI · Python · MCP Integrations
+
+### 💼 Professional Highlights
+- **LLM-Powered Support Automation**: 60% ticket deflection · 38% CSAT improvement (TribalScale)
+- **Enterprise Digital Transformation**: $36M program across 49 locations
+- **Edge + IoT at Scale**: Hybrid edge-cloud predictive maintenance across 500+ assets
+- **Regulated Digital Health**: Led end-to-end product development for a clinical-grade platform
+- **Maritime / Industrial IoT**: BLE-based personnel tracking across multi-site deployments
+
+### 🛠 Tech & Tools I Work With
+**AI / ML**: Claude API · OpenClaw · LangGraph · Ollama (Gemma 3, Mistral) · MCP Protocol · Cursor AI · Lovable
+**Product & Dev**: Python · React · Swagger / OpenAPI · Jira · Confluence · Mermaid · Figma
+**Domains**: B2B SaaS · Edge Computing · Digital Health · IoT · Maritime Tech · FinTech
+
+### 🧠 My Approach
+I believe the best PMs in the AI era are the ones who build alongside their engineering teams. Every side project here started as a question: *"Can I actually ship this with agentic workflows?"* The answer keeps being **yes** — and each build sharpens how I scope, prioritize, and communicate as a product leader.
+
+I write about the real costs, tradeoffs, and lessons of building with AI on [LinkedIn](https://www.linkedin.com).
+
+### 📫 Let's Connect
+- **LinkedIn**: [Connect with me](https://www.linkedin.com)
+- **Email**: Reach out via LinkedIn DM or email
+
+---
+
 ## 🌐 Live Demo
 
-- **Frontend:** https://frontend-neon-seven-26.vercel.app
-- **Backend API:** https://reliable-solace-production-dd7a.up.railway.app/api
+- **Frontend:** [https://frontend-neon-seven-26.vercel.app](https://frontend-neon-seven-26.vercel.app)
+- **Backend API:** [https://reliable-solace-production-dd7a.up.railway.app/api](https://reliable-solace-production-dd7a.up.railway.app/api)
 - **Status:** ✅ Production Ready
 
 Demo uses fictional Vancouver coffee shops and competitors for testing.
